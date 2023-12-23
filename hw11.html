@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корзина товаров</title>
+  <style>
+    .item {
+      border: 1px solid #000;
+      padding: 10px;
+      margin: 10px;
+      display: inline-block;
+    }
+    #cart {
+      border: 1px solid #000;
+      padding: 10px;
+      margin: 10px;
+    }
+    #range-square{
+      display: none
+    }
+    #range-circle{
+      display: none
+    }
+    #range-triangle{
+      display: none
+    }
+  </style>
+</head>
+<body>
+<div class="item">
+  <h3>Квадрат</h3>
+  <p>Стоимость: $10</p>
+  <input type="text" id="range-square" name="range-square">
+  <button onclick="addToCart('Квадрат', 10, getRange('range-square'))">Добавить в корзину</button>
+  <button onclick="removeFromCart('Квадрат', 10)">Убрать из корзины</button>
+</div>
+<div class="item">
+  <h3>Круг</h3>
+  <p>Стоимость: $15</p>
+  <input type="text" id="range-circle" name="range-circle">
+  <button onclick="addToCart('Круг', 15, getRange('range-circle'))">Добавить в корзину</button>
+  <button onclick="removeFromCart('Круг', 15)">Убрать из корзины</button>
+</div>
+<div class="item">
+  <h3>Треугольник</h3>
+  <p>Стоимость: $20</p>
+  <input type="text" id="range-triangle" name="range-triangle">
+  <button onclick="addToCart('Треугольник', 20, getRange('range-triangle'))">Добавить в корзину</button>
+  <button onclick="removeFromCart('Треугольник', 20)">Убрать из корзины</button>
+</div>
+<div id="cart">
+  <h2>Корзина</h2>
+  <p id="cart-content">Корзина пуста</p>
+  <p id="cart-total">Итого: $0</p>
+  <button onclick="clearCart()">Очистить корзину</button>
+  <button onclick="sortCartByAscendingPrice()">Сортировать по возрастанию цены</button>
+  <button onclick="sortCartByDescendingPrice()">Сортировать по убыванию цены</button>
+</div>
+
+<div id="filter">
+  <input type="text" id="min-price" placeholder="Мин. цена">
+  <input type="text" id="max-price" placeholder="Макс. цена">
+  <button onclick="filterByPrice()">Отфильтровать</button>
+</div>
+
+<script>
+  let cart = {};
+
+  function addToCart(itemName, price, range) {
+    if (cart[itemName]) {
+      cart[itemName].count++;
+    } else {
+      cart[itemName] = { price: price, range: range, count: 1 };
+    }
+    updateCart();
+  }
+
+  function removeFromCart(itemName, price) {
+    if (cart[itemName]) {
+      if (cart[itemName].count > 0) {
+        cart[itemName].count--;
+        updateCart();
+      }
+    }
+  }
+
+  function clearCart() {
+    cart = {};
+    updateCart();
+  }
+
+  function updateCart() {
+    let cartContent = "Товары в корзине:<br/>";
+    let total = 0;
+    for (let item in cart) {
+      cartContent += `${item}: $${cart[item].price} x ${cart[item].count}<br/>`;
+      total += cart[item].price * cart[item].count;
+    }
+    document.getElementById('cart-content').innerHTML = cartContent;
+    document.getElementById('cart-total').innerHTML = `Итого: $${total}`;
+  }
+
+  function getRange(inputId) {
+    return document.getElementById(inputId).value;
+  }
+
+  function filterByPrice() {
+    let minPrice = parseFloat(document.getElementById('min-price').value);
+    let maxPrice = parseFloat(document.getElementById('max-price').value);
+
+    let items = document.querySelectorAll('.item');
+    items.forEach(function(item) {
+      let priceText = item.querySelector('p').textContent;
+      let price = parseFloat(priceText.match(/\d+/)[0]);
+      if (price < minPrice || price > maxPrice) {
+        item.style.display = 'none';
+      } else {
+        item.style.display = 'block';
+      }
+    });
+  }
+
+  function sortCartByPrice(order) {
+    let sortedCart = Object.entries(cart).sort((a, b) => {
+      let priceA = a[1].price * a[1].count;
+      let priceB = b[1].price * b[1].count;
+      if (order === 'asc') {
+        return priceA - priceB;
+      } else {
+        return priceB - priceA;
+      }
+    });
+
+    cart = Object.fromEntries(sortedCart);
+    updateCart();
+  }
+  function sortCartByAscendingPrice() {
+    sortCartByPrice('asc');
+  }
+
+  function sortCartByDescendingPrice() {
+    sortCartByPrice('desc');
+  }
+</script>
+</body>
+</html>

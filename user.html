@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/RyanGoslingggg.png" type="image/png">
+    <link rel="stylesheet" href="../css/userstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300&display=swap" rel="stylesheet">
+    <title>Киногерои: Профиль</title>
+</head>
+<body>
+    <form method="POST">
+    <fieldset>
+        <legend>Персональные данные</legend>
+        <label for="name">Имя:</label>
+        <input type="text" name="name" id="name" placeholder="Введите ваше имя" required>
+        <br>
+        <label for="phone">Телефон:</label>
+        <input type="tel" name="phone" id="phone" placeholder="+7 (___) ___-__-__" pattern="\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" placeholder="example@mail.com" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" id="password" minlength="6" required>
+    </fieldset>
+  <br>
+  <fieldset>
+    <legend>Оцените свой уровень вовлечённости</legend>
+    <label for="delivery1">
+      <input type="radio" name="delivery" id="delivery1" value="delivery1" checked> Киноман
+    </label>
+    <br>
+    <label for="delivery2">
+      <input type="radio" name="delivery" id="delivery2" value="delivery2"> Любитель
+    </label>
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Выберите аватар</legend>
+    <input type="file" name="file" id="file">
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Выберите дату рождения</legend>
+    <input type="datetime-local" name="datetime" id="datetime" min="2022-01-01T00:00" max="2022-12-31T23:59" required>
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Опишите себя</legend>
+    <textarea name="comment" id="comment" cols="30" rows="5" maxlength="200" placeholder="Введите ваше описание"></textarea>
+  </fieldset>
+  <br>
+</form>
+<form method="POST">
+    <legend>Выберите любимые жанры</legend>
+    <br>
+    <label for="product1">
+      <input type="checkbox" name="product[]" id="product1" value="product1"> Драма
+    </label>
+    <br>
+    <label for="product2">
+      <input type="checkbox" name="product[]" id="product2" value="product2"> Боевик
+    </label>
+    <br>
+    <label for="product3">
+      <input type="checkbox" name="product[]" id="product3" value="product3"> Ужасы
+    </label>
+    <br>
+    <label for="product4">
+      <input type="checkbox" name="product[]" id="product4" value="product3"> Авторское
+    </label>
+  </fieldset>
+  <br>
+  <button type="submit">Отправить</button>
+</form>
+</body>
+</html>

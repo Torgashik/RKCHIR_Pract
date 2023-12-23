@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="notify-btn">Уведомление</button>
+<div id="notify-container"></div>
+<style>
+    #notify-btn {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    #notify-container {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 200px;
+        height: auto;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: none;
+    }
+
+    #notify-close {
+        float: right;
+        cursor: pointer;
+    }
+</style>
+<script>
+    var notifyBtn = document.getElementById("notify-btn");
+    var notifyContainer = document.getElementById("notify-container");
+
+    notifyBtn.addEventListener("click", function() {
+        notifyContainer.style.display = "block";
+    });
+
+    var notifyClose = document.createElement("span");
+    notifyClose.innerHTML = "&times;";
+    notifyClose.id = "notify-close";
+    notifyClose.addEventListener("click", function() {
+        notifyContainer.style.display = "none";
+    });
+
+    notifyContainer.appendChild(notifyClose);
+    notifyContainer.appendChild(document.createTextNode("Это уведомление"));
+
+
+</script>
+
+</body>
+</html>

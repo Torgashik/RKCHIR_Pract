@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <section>
+    <h1>Gosling</h1>
+  </section>
+  <section>
+    <h1>Phoenix</h1>
+  </section>
+  <section>
+    <h1>Pitt</h1>
+  </section>
+  <section>
+    <h1>Harrington</h1>
+  </section>
+</div>
+<style>
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .fadeIn {
+    animation: fadeIn 2s ease-in forwards;
+  }
+
+  body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    .container {
+      width: 100%;
+      height: 100%;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      & section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 110vw;
+        height: 110vh;
+        scroll-snap-align: start;
+
+        background-position: center;
+        transition: background-position 0.5s ease-out;
+
+
+        &:nth-of-type(1) {
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.08)), url("https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/c357d7f8-b7c6-4e61-a612-f0c6c873da5b/3840x");
+          background-size: cover;
+          background-position: center;
+          background-color: rgb(28, 28, 28);
+          color: white;
+        }
+        &:nth-of-type(2) {
+          background-color: rgb(38, 38, 38);
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.08)), url("https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/ae3a59cd-e05a-4561-a3bd-5f6ad4e790d3/3840x");
+          background-size: cover;
+          background-position: center;
+          background-color: rgb(38, 38, 38);
+          color: white;
+        }
+        &:nth-of-type(3) {
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.08)), url("https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/61aa55e0-8b6e-4e0c-9633-a8dc7c3bb2c7/3840x");
+          background-size: cover;
+          background-position: center;
+          background-color: rgb(48, 48, 48);
+          color: white;
+        }
+        &:nth-of-type(4) {
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.08)), url("https://cdna.artstation.com/p/assets/images/images/057/587/002/large/artem-dubinin-render-5-1.jpg?1672065225");
+          background-size: cover;
+          background-position: center;
+          background-color: rgb(58, 58, 58);
+          color: white;
+        }
+
+        & h1 {
+          opacity: 0;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 6em;
+          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 0.25em;
+        }
+      }
+    }
+  }
+</style>
+<script>
+  /*FadeIn Text Effect*/
+  let observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      let h1 = entry.target.querySelector('h1');
+      if (entry.isIntersecting) {
+        h1.classList.add('fadeIn');
+      } else {
+        h1.classList.remove('fadeIn');
+      }
+    });
+  }, { threshold: [0.5] });
+
+  document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+  });
+
+
+  /*Parallax Effect*/
+  document.querySelectorAll('section').forEach(section => {
+    section.addEventListener('mousemove', function(e) {
+      let moveX = (e.pageX * -1 / 60);
+      let moveY = (e.pageY * -1 / 60);
+      this.style.backgroundPosition = `calc(50% + ${moveX}px) calc(50% + ${moveY}px)`;
+    });
+  });
+</script>
+</body>
+</html>

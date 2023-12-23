@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Что я</title>
+  <style>
+    body{
+      color: blue;
+      background-color: #4CAF50;
+    }
+    #contents {
+      padding: 20px;
+      background-color: #f0f0f0;
+      margin: 10px;
+    }
+
+    .gallery-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .thumbnail {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    .main-image-container{
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-image {
+      margin: auto;
+      min-height: 300px;
+      max-height: 400px;
+    }
+    
+    #fileList{
+      list-style: none;
+      
+    }
+
+    #fileList li{
+      border: 2px solid black;
+      margin: 10px;
+      padding: 5px;
+      width: 50px;
+      cursor: pointer;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;
+    }
+
+    .selected {
+      background-color: #ff0000;
+    }
+
+    .slider {
+      margin-top: 100px;
+      width: 300px;
+      height: 20px;
+      background-color: #f2f2f2;
+      position: relative;
+    }
+
+    .slider .handle {
+      width: 15px;
+      height: 30px;
+      background-color: #337ab7;
+      position: absolute;
+      top: -5px;
+      left: 0;
+      cursor: pointer;
+    }
+
+    .slider .handle:active {
+      cursor: grabbing;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 15vh;
+      font-size: 14px;
+    }
+
+    .cart_container{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 15vh;
+      font-size: 14px;
+      margin-top: 100px;
+    }
+
+    .items {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item {
+      border: 1px solid #000;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: move;
+    }
+
+    .cart {
+      border: 2px dashed #000;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+    }
+
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      position: absolute;
+      top: 800px;
+    }
+
+    span {
+      opacity: 0;
+      transition: all 0.4s ease;
+      transform: translateY(-50px);
+      display: inline-block;
+    }
+
+    span.fade {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .text{
+      color: green;
+    }
+  </style>
+</head>
+<body style="background-color: #c0c0c0">
+  <div class="container">
+    <h1 class="text">Лучший сайт</h1>
+  </div>
+
+  <div id="contents">
+    <p>Сюда жмак -> <a href="https://cs14.pikabu.ru/post_img/2022/12/30/7/1672394956150863133.jpg">Жмакалка</a></p>
+  </div> 
+
+  <div class="gallery-container">
+    <img src="https://masterpiecer-images.s3.yandex.net/ca04e70e684d11ee9db692669a1675b3:upscaled" alt="Image 1" class="thumbnail" onclick="changeImage('https://masterpiecer-images.s3.yandex.net/ca04e70e684d11ee9db692669a1675b3:upscaled')">
+    <img src="12.jpeg" alt="Image 2" class="thumbnail" onclick="changeImage('12.jpeg')">
+    <img src="Unknown.jpeg" alt="Image 3" class="thumbnail" onclick="changeImage('Unknown.jpeg')">
+    <img src="https://cdnn21.img.ria.ru/images/07e5/06/18/1738448523_0:21:864:669_1280x0_80_0_0_11a58291504c5a5013eeeae1821ab186.jpg" alt="Image 4" class="thumbnail" onclick="changeImage('https://cdnn21.img.ria.ru/images/07e5/06/18/1738448523_0:21:864:669_1280x0_80_0_0_11a58291504c5a5013eeeae1821ab186.jpg')">
+  </div>
+
+  <div class="main-image-container">
+      <img src="https://cdnn21.img.ria.ru/images/07e7/01/19/1847250713_0:29:985:583_600x0_80_0_0_b1e3d39ff95ff4bb4be991043518918e.jpg" alt="Main Image" class="main-image">
+  </div>
+
+  <ul id="fileList">
+    <li>кирпич 1</li>
+    <li>кирпич 2</li>
+    <li>кирпич 3</li>
+  </ul>
+
+  <div class="slider">
+    <div class="handle"></div>
+  </div>
+
+  <div class="cart_container">
+    <div class="items">
+      <div class="item" id="item1" draggable="true" ondragstart="drag(event)" data-price="10">Один - 10</div>
+      <div class="item" id="item2" draggable="true" ondragstart="drag(event)" data-price="20">Два - 20</div>
+      <div class="item" id="item3" draggable="true" ondragstart="drag(event)" data-price="30">Три - 30</div>
+    </div>
+    <div class="cart" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <h2>Корзина</h2>
+      <p>Итоговая цена: <span id="total-price">0</span></p>
+    </div>
+  </div>
+
+  <div id="box"></div>
+
+</body>
+<script> 
+  document.getElementById('contents').addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        e.preventDefault();
+        var confirmLeave = confirm('Уверены, что хотите это увидеть?');
+        if (confirmLeave) {
+          window.location = e.target.href; 
+        }
+      }
+    });
+
+  function changeImage(imageSrc) {
+    let mainImage = document.querySelector('.main-image');
+    mainImage.src = imageSrc;
+  }
+
+  let list = document.getElementById('fileList');
+  let items = list.getElementsByTagName('li');
+
+  for (let i = 0; i < items.length; i++) {
+    items[i].addEventListener('click', function(event) {
+      if (!(event.ctrlKey || event.metaKey)) {
+        for (let j = 0; j < items.length; j++) {
+          items[j].classList.remove('selected');
+        }
+      }
+      this.classList.add('selected');
+    });
+  }
+
+  var slider = document.querySelector('.slider');
+  var handle = document.querySelector('.handle');
+  var isDown = false;
+
+  handle.addEventListener('mousedown', function(e) {
+    isDown = true;
+    handle.style.cursor = "grabbing";
+  });
+
+  document.addEventListener('mouseup', function() {
+    isDown = false;
+    handle.style.cursor = "pointer";
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDown) return;
+    var x = e.clientX - slider.getBoundingClientRect().left;
+    var maxX = slider.clientWidth - handle.clientWidth;
+    if (x < 0) {
+      x = 0;
+    } else if (x > maxX) {
+      x = maxX;
+    }
+    handle.style.left = x + 'px';
+  });
+
+  function allowDrop(event) {
+    event.preventDefault();
+  }
+
+  function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var draggedItem = document.getElementById(data);
+    var price = parseFloat(draggedItem.getAttribute("data-price"));
+    
+    if (event.target.classList.contains("cart")) {
+      event.target.appendChild(draggedItem);
+      
+      var totalPrice = parseFloat(document.getElementById("total-price").textContent);
+      totalPrice += price;
+      document.getElementById("total-price").textContent = totalPrice;
+    }
+  }
+
+  var box = document.getElementById("box");
+  var position = 400;
+  var speed = 2;
+
+  function moveBox() {
+    position += speed;
+    if (position >= 700) {
+      speed = -2;
+    }
+    if (position <= 400) {
+      speed = 2;
+    }
+    box.style.left = position + "px";
+    requestAnimationFrame(moveBox);
+  }
+
+  moveBox();
+
+  
+
+  const text = document.querySelector(".text");
+  const strText = text.textContent;
+  const splitText = strText.split(""); text.textContent = "";
+  for (let i = 0; i < splitText.length; i++) {
+    if (splitText[i] === ' ')
+      text.innerHTML += "<span>&nbsp;</span>";
+    else
+      text.innerHTML += "<span>" + splitText[i] + "</span>";
+  }
+
+  let char = 0;
+  let timer = setInterval(onTick, 50);
+
+  function onTick() {
+    const span = text.querySelectorAll('span')[char];
+    span.classList.add('fade');
+    char++;
+    if(char === splitText.length) {
+      complete();
+      return;
+    }
+  }
+
+  function complete() {
+    clearInterval(timer);
+    timer = null;
+  }
+</script>
+</html>

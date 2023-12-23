@@ -1,0 +1,24 @@
+#like_button{
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #005a2b;
+    cursor: pointer;
+    z-index: 6;
+}
+
+#like_button.liked {
+    background-color: rgb(167, 87, 124);
+}
+
+.follower {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background-image: url("../img/heart.png");
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    pointer-events: none;
+}

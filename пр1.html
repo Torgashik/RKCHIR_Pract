@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Пример выравнивания картинки по центру с помощью JS</title>
+</head>
+<body>
+
+<div id="centeredContainer">
+  <img id="centeredImage" src="../img/png-transparent-smiley-emoticon-thumb-signal-emoji-dank-face-smiley-thumb-signal.png" width="50px" height ="50">
+
+</div>
+
+<script>
+  function centerContainerAndImage() {
+    var container = document.getElementById("centeredContainer");
+    var image = document.getElementById("centeredImage");
+    var containerWidth = container.offsetWidth;
+    var containerHeight = container.offsetHeight;
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+    var xPos = (windowWidth - containerWidth) / 2;
+    var yPos = (windowHeight - containerHeight) / 2;
+
+    container.style.position = "fixed";
+    container.style.left = xPos + "px";
+    container.style.top = yPos + "px";
+
+    var imageWidth = image.width;
+    var imageHeight = image.height;
+    var imageXPos = (containerWidth - imageWidth) / 2;
+    var imageYPos = (containerHeight - imageHeight) / 2;
+
+    image.style.position = "absolute";
+    image.style.left = imageXPos + "px";
+    image.style.top = imageYPos + "px";
+  }
+
+  window.onresize = centerContainerAndImage;
+  window.onload = centerContainerAndImage;
+  document.addEventListener('click', function(event) {
+    var x = event.clientX;
+    var y = event.clientY;
+    console.log('Coords: ' + x + ', ' + y);
+    alert('Coords: ' + x + ', ' + y);
+  });
+</script>
+</body>
+</html>
